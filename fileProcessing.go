@@ -35,19 +35,24 @@ func processFile(filePath string, rootWg *sync.WaitGroup) {
 
 				//if we found all opened and closed braces (class code is finished), then create a go file
 				if classData.startCalculation && curlyBrasesCount == 0 {
-					newFilePath := filePath + ".go"
-					f, fileError := os.Create(newFilePath)
-					if fileError == nil {
-						defer f.Close()
 
-						_, fileError = f.WriteString(classData.GetGoType())
+					newFilePath, newFileError := settings.GetDestinationPath(filePath)
+					if newFileError == nil {
+						f, fileError := os.Create(newFilePath)
 						if fileError == nil {
-							fmt.Printf("%s was created\n", newFilePath)
+							defer f.Close()
+
+							_, fileError = f.WriteString(classData.GetGoType())
+							if fileError == nil {
+								fmt.Printf("%s was created\n", newFilePath)
+							} else {
+								fmt.Println(fileError)
+							}
 						} else {
 							fmt.Println(fileError)
 						}
 					} else {
-						fmt.Println(fileError)
+						fmt.Println(newFileError)
 					}
 					classData = nil
 				} else {

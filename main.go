@@ -7,19 +7,18 @@ import (
 )
 
 func main() {
-	var strSearchPath, strDestinationPath string
 
 	if len(os.Args) > 1 {
-		strSearchPath = os.Args[1]
-		strDestinationPath = os.Args[2]
+		settings.SearchPath = os.Args[1]
+		settings.DestinationPath = os.Args[2]
 	}
 
-	strSearchPath = "C:\\Users\\Serge_Sheff\\Desktop\\121"
-	strDestinationPath = "C:\\Users\\Serge_Sheff\\Desktop\\goResult"
+	settings.SearchPath = "C:\\Users\\Serge_Sheff\\Desktop\\121"
+	settings.DestinationPath = "C:\\Users\\Serge_Sheff\\Desktop\\goResult"
 
-	if len(strings.TrimSpace(strSearchPath)) > 0 {
-		if len(strings.TrimSpace(strDestinationPath)) > 0 {
-			ProcessPath(strSearchPath, nil)
+	if len(strings.TrimSpace(settings.SearchPath)) > 0 {
+		if len(strings.TrimSpace(settings.DestinationPath)) > 0 {
+			ProcessPath(settings.SearchPath, nil)
 		} else {
 			fmt.Println("Destination path cannot be empty")
 		}
